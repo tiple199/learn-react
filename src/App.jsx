@@ -5,18 +5,13 @@ import reactLogo from "./assets/react.svg";
 import { useState } from "react";
 const App = () => {
   const [todoList,setTodoList] = useState([
-    {id: 1,name:"Learning React"},
-    {id: 2,name:"Watching Youtube"}
+    // {id: 1,name:"Learning React"},
+    // {id: 2,name:"Watching Youtube"}
   ])
-  const hoidanit = "Tiệp";
-  const age = "21";
-  const data = {
-    addresss: "hanoi",
-    country: "vietnam"
-  }
+  
   const addNewTodo = (name) =>{
     const newTodo = {
-      id:randomIntFromInterval(1,10000000),
+      id:randomIntFromInterval(1,1000000),
       name:name 
     }
 
@@ -34,10 +29,7 @@ const App = () => {
       <TodoNew 
       addNewTodo = {addNewTodo}
       />
-      <TodoData 
-      name={hoidanit}
-      age ={age}
-      data = {data}
+      <TodoData
       todoList = {todoList}
       />
       <div className="todo-image">
