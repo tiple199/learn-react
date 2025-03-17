@@ -20,6 +20,9 @@
     border: none;
 }
 .todo-data{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
     width: 500px;
     margin-top: 10px;
     padding: 10px;
@@ -51,4 +54,10 @@
  .logo {
     animation: logo-spin infinite 20s linear;
   }
+}
+
+
+.todo-item{
+  display: flex;
+  justify-content: space-between;
 }
