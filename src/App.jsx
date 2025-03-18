@@ -29,12 +29,15 @@ const App = () => {
       <TodoNew 
       addNewTodo = {addNewTodo}
       />
+      {todoList.length > 0 ? 
       <TodoData
       todoList = {todoList}
       />
+      :
       <div className="todo-image">
         <img src={reactLogo} alt="" className="logo"/>
       </div>
+      }
     </div>
   )
 }
