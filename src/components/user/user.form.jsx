@@ -1,4 +1,4 @@
-import { Button, Input, notification } from 'antd';
+import { Button, Flex, Input, notification,Modal } from 'antd';
 import { useState } from 'react';
 import { createUserAPI } from '../../services/api.service';
 
@@ -9,7 +9,9 @@ const UserForm = () => {
     const [password,setPassword] = useState("");
     const [phone,setPhone] = useState("");
 
-    const handleClickBtn = async () =>{
+    const [isModalOpen,setIsModalOpen] = useState(false);
+
+    const handleSubmitBtn = async () =>{
         const res = await createUserAPI(fullName,email,password,phone);
         if(res.data){
             notification.success({
@@ -23,42 +25,54 @@ const UserForm = () => {
                 description:JSON.stringify(res.message)
             })
         }
+        setIsModalOpen(false);
     }   
     return(
-        <div className="user-form" style={{ margin: "20px 0" }}>
-            <div style={{display: "flex",gap:"10px",flexDirection:"column"}}>
-                <div>
-                    <span>FullName</span>
-                    <Input
-                    value={fullName}
-                    onChange={(e) => setFullFame(e.target.value)}
-                    />
+        <div className="user-form" style={{ margin: "10px 0" }}>
+            
+                <div style={{display:"Flex",justifyContent:"space-between"}}>
+                    <h3>Table Users</h3>
+                    <Button onClick={()=>setIsModalOpen(true)} type='primary'> Create User </Button>
                 </div>
-                <div>
-                    <span>Email</span>
-                    <Input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <span>Password</span>
-                    <Input.Password
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <span>Phone Number</span>
-                    <Input
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <Button onClick={handleClickBtn} type='primary'> Create User </Button>
-                </div>
-            </div>
+                <Modal title="Create User"
+                    open={isModalOpen} 
+                    onOk={()=>handleSubmitBtn()} 
+                    onCancel={()=>setIsModalOpen(false)}
+                    maskClosable={false}
+                    okText={"Create"}>
+                    <div style={{display: "flex",gap:"15px",flexDirection:"column"}}>
+                        <div>
+                            <span>FullName</span>
+                            <Input
+                            value={fullName}
+                            onChange={(e) => setFullFame(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <span>Email</span>
+                            <Input
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <span>Password</span>
+                            <Input.Password
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <span>Phone Number</span>
+                            <Input
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                </Modal>
+
+            
         </div>
     )
 }
