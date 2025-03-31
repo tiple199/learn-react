@@ -24,14 +24,14 @@ const router = createBrowserRouter([
         element: <TodoApp/>,
       },
       {
-      path: "/users",
-      element: <UserPage/>,
-    },
-    {
-      path: "/products",
-      element: <BookPage/>,
-    },
-  ]
+        path: "/users",
+        element: <UserPage/>,
+      },
+      {
+        path: "/products",
+        element: <BookPage/>,
+      },
+    ]
   },
   {
     path: "/login",

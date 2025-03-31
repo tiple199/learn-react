@@ -7,7 +7,7 @@ const UserForm = () => {
     const [fullName,setFullFame] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
-    const [phone,setPhong] = useState("");
+    const [phone,setPhone] = useState("");
 
     const handleClickBtn = async () =>{
         const res = await createUserAPI(fullName,email,password,phone);
@@ -15,6 +15,12 @@ const UserForm = () => {
             notification.success({
                 message: "Create user",
                 description: "Tạo user thành công"
+            })
+        }
+        else{
+            notification.error({
+                message: "Error create user",
+                description:JSON.stringify(res.message)
             })
         }
     }   
@@ -46,7 +52,7 @@ const UserForm = () => {
                     <span>Phone Number</span>
                     <Input
                     value={phone}
-                    onChange={(e) => setPhong(e.target.value)}
+                    onChange={(e) => setPhone(e.target.value)}
                     />
                 </div>
                 <div>
