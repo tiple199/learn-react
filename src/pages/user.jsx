@@ -22,6 +22,7 @@ const UserPage = () =>{
             loadUser={loadUser}
             />
             <UserTable
+            loadUser={loadUser}
             dataUser={dataUser}
             />
         </div>
