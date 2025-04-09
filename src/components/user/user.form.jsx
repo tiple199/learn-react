@@ -1,4 +1,4 @@
-import { Button, Flex, Input, notification,Modal } from 'antd';
+import { Button, Input, notification,Modal } from 'antd';
 import { useState } from 'react';
 import { createUserAPI } from '../../services/api.service';
 
