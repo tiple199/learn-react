@@ -89,6 +89,7 @@ const UserTable = (props) =>{
       loadUser={loadUser}
       />
       <ViewUserDetail
+      loadUser = {loadUser}
       dataUserDetail = {dataUserDetail}
       openUserDetail={openUserDetail}
       setOpenUserDetail={setOpenUserDetail}
