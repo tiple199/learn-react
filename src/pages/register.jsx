@@ -1,6 +1,6 @@
-import { Button, Form, Input, notification } from "antd";
+import { Button, Col, Divider, Form, Input, notification, Row } from "antd";
 import { registerUserAPI } from "../services/api.service";
-import { useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 
 const RegisterPage = () =>{
     const [form] = Form.useForm();
@@ -25,42 +25,53 @@ const RegisterPage = () =>{
         
     }
     return(
+        <>
+        <h1 style={{marginTop:"15px",display:"flex",justifyContent:"center"}}>Đăng ký tài khoản</h1>
         <Form
         form={form}
         layout="vertical"
-    
+        style={{margin: "30px"}}
+        
         onFinish={onFinish}
         // onFinishFailed={onFinishFailed}
         autoComplete="off"
         >
-    
-        <div style={{
-            // display: "flex",
-            // flexDirection:"column",
-            margin:"50px"}}>
-            <Form.Item
-            label="Full Name"
-            name="fullName"
-            rules={[{ required: true, message: 'Please input your username!' }]}
-            >
-            <Input />
-            </Form.Item>
-            <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: 'Please input your email!' }]}
-            >
-            <Input />
-            </Form.Item>
-            <Form.Item
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-            <Input.Password />
-            </Form.Item>
-
-            <Form.Item
+        <Row justify={'center'}>
+            <Col xs={24} md={8}>
+                <Form.Item
+                label="Full Name"
+                name="fullName"
+                rules={[{ required: true, message: 'Please input your username!' }]}
+                >
+                <Input />
+                </Form.Item>
+            </Col>
+        </Row>
+        <Row justify={'center'}>
+            <Col xs={24} md={8}>
+                <Form.Item
+                label="Email"
+                name="email"
+                rules={[{ required: true, message: 'Please input your email!' }]}
+                >
+                <Input />
+                </Form.Item>
+            </Col>
+        </Row>
+        <Row justify={'center'}>
+            <Col xs={24} md={8}>
+                <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true, message: 'Please input your password!' }]}
+                >
+                <Input.Password />
+                </Form.Item>
+            </Col>
+        </Row>
+        <Row justify={'center'}>
+            <Col xs={24} md={8}>
+                <Form.Item
             label="Phone Number"
             name="phone"
             rules={[{
@@ -70,16 +81,22 @@ const RegisterPage = () =>{
               }]}
             >
             <Input />
-            </Form.Item>
-
-
-
+                </Form.Item>
+            </Col>
+        </Row>
+        <Row justify={'center'}>
+            <Col xs={24} md={8}>
             <div>
                 <Button onClick={()=>form.submit()} type="primary">Register</Button>
             </div>
-        </div>
-    
-    </Form>
+            <Divider />
+            <div style={{display:"flex",justifyContent:"center"}}>Chưa có tài khoản? <Link to={"/login"}> Đăng nhâp tại đây</Link></div>
+            </Col>
+        </Row>
+        
+        </Form>
+        
+    </>
     )
 }
 export default RegisterPage;
