@@ -1,14 +1,32 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UsergroupAddOutlined, HomeOutlined, AuditOutlined, SettingOutlined,LoginOutlined,AliwangwangOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
+import { Menu, message } from 'antd';
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
+import { logoutAPI } from "../../services/api.service";
 const Header = () => {
     const [current, setCurrent] = useState('home');
-
-    const {user} = useContext(AuthContext);
+    const navigate = useNavigate();
+    const {user, setUser} = useContext(AuthContext);
     console.log(">>> check data:", user);
     
+    const handleLogout = async() => {
+      const res = await logoutAPI();
+      if(res.data){
+        
+        localStorage.removeItem("access_token")
+        setUser({
+          email: "admin@.com",
+          phone: "",
+          fullName: "",
+          role: "",
+          avatar: "",
+          id: ""
+        })
+        message.success("Logout success!");
+        navigate("/");
+      }
+    }
 
     const onClick = e => {
     console.log('click ', e);
@@ -43,7 +61,8 @@ const Header = () => {
           icon: <AliwangwangOutlined />,
           children: [
             {
-              label: <Link to={"/logout"}>Đăng xuất</Link>, key: "logout"
+              label: <span onClick={()=>handleLogout()}>Đăng xuất</span>,
+               key: "logout"
             },
           ],
         }] : [])  
