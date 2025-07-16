@@ -25,7 +25,6 @@ const App = () => {
     const res = await getAccountAPI();
     await delay(3000);
     if(res.data){
-      console.log(">>check res", res.data);
       setUser(res.data.user);
       
     }

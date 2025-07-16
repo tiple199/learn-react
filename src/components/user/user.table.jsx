@@ -129,7 +129,7 @@ const UserTable = (props) =>{
       openUserDetail={openUserDetail}
       setOpenUserDetail={setOpenUserDetail}
       />
-      </>
+    </>
   )
 }
 export default UserTable;

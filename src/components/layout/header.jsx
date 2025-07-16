@@ -8,7 +8,6 @@ const Header = () => {
     const [current, setCurrent] = useState('home');
     const navigate = useNavigate();
     const {user, setUser} = useContext(AuthContext);
-    console.log(">>> check data:", user);
     
     const handleLogout = async() => {
       const res = await logoutAPI();
