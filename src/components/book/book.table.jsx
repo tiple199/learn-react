@@ -1,9 +1,12 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Popconfirm, Table } from "antd";
+import { Button, notification, Popconfirm, Table } from "antd";
 import { useState } from "react";
 import ViewBookDetail from "./view.book.detail";
-import BookForm from "./book.form.controll";
+// import BookForm from "./book.form.controll";
 import BookFormUncontroll from "./book.form.uncontroll";
+// import UpdateBookModal from "./update_book_modal";
+import UpdateBookModalUncontroll from "./update_book_modal.uncontroll";
+import { deleteBookAPI } from "../../services/api.service";
 
 
 const BookTable = (props) => {
@@ -11,11 +14,26 @@ const BookTable = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {current,pageSize,total,dataBook,setCurrent,setPageSize,loadBook} = props;
   const [openBookDetail, setOpenBookDetail] = useState(false);
-  const [dataBookDetail, setDataBookDetail] = useState("")
+  const [dataBookDetail, setDataBookDetail] = useState("");
+  const [isModalUpdateOpen,setIsModalUpdateOpen] = useState(false);
+  const [dataUpdate,setDataUpdate] = useState("");
 
-  const handleDeleteUser = () =>{
-
-}
+  const handleDeleteUser = async (id) =>{
+    const res = await deleteBookAPI(id);
+    if(res.data){
+        notification.success({
+            message: "Delete Book",
+            description: "Xóa thành công"
+        })
+    }
+    else{
+        notification.error({
+            message: "Error delete book",
+            description:JSON.stringify(res.message)
+        })
+    }
+    await loadBook();
+  }
 const columns = [
   {
     title: 'STT',
@@ -62,8 +80,8 @@ const columns = [
     render: (_, record) => (
           <div style={{display:"flex",gap:"20px"}}>
             <EditOutlined onClick={()=>{
-              // setDataUpdate(record);
-              // setIsModalUpdateOpen(true);
+              setDataUpdate(record);
+              setIsModalUpdateOpen(true);
             }
 
             } style={{cursor:"pointer",color:"orange"}}/>
@@ -134,6 +152,21 @@ const columns = [
           openBookDetail={openBookDetail}
           setOpenBookDetail={setOpenBookDetail}
 
+          />
+          {/* <UpdateBookModal
+          isModalUpdateOpen={isModalUpdateOpen}
+          setIsModalUpdateOpen={setIsModalUpdateOpen}
+          dataUpdate={dataUpdate}
+          setDataUpdate={setDataUpdate}
+          loadBook={loadBook}
+
+          /> */}
+          <UpdateBookModalUncontroll 
+          isModalUpdateOpen={isModalUpdateOpen}
+          setIsModalUpdateOpen={setIsModalUpdateOpen}
+          dataUpdate={dataUpdate}
+          setDataUpdate={setDataUpdate}
+          loadBook={loadBook}
           />
         </>
     )
