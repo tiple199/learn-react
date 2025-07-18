@@ -1,22 +1,41 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, notification, Popconfirm, Table } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ViewBookDetail from "./view.book.detail";
 // import BookForm from "./book.form.controll";
 import BookFormUncontroll from "./book.form.uncontroll";
 // import UpdateBookModal from "./update_book_modal";
 import UpdateBookModalUncontroll from "./update_book_modal.uncontroll";
-import { deleteBookAPI } from "../../services/api.service";
+import { deleteBookAPI, fetchAllBookAPI } from "../../services/api.service";
 
 
 const BookTable = (props) => {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {current,pageSize,total,dataBook,setCurrent,setPageSize,loadBook} = props;
+  const {current,pageSize,setCurrent,setPageSize} = props;
   const [openBookDetail, setOpenBookDetail] = useState(false);
   const [dataBookDetail, setDataBookDetail] = useState("");
   const [isModalUpdateOpen,setIsModalUpdateOpen] = useState(false);
   const [dataUpdate,setDataUpdate] = useState("");
+  const [loadingTable, setLoadingTable] =useState(false);
+  const [dataBook,setDataBook] = useState([]);
+    const [total,setTotal] = useState(0);
+
+  useEffect(()=>{
+        loadBook();
+    },[current,pageSize]);
+    const loadBook = async() =>{
+        setLoadingTable(true);
+        const res = await fetchAllBookAPI(current,pageSize);
+        if(res.data){
+            setCurrent(+res.data.meta.current);
+            setPageSize(+res.data.meta.pageSize);
+            setTotal(res.data.meta.total);
+            setDataBook(res.data.result);
+        }
+        setLoadingTable(false);
+        
+    }
 
   const handleDeleteUser = async (id) =>{
     const res = await deleteBookAPI(id);
@@ -135,6 +154,7 @@ const columns = [
           
           } }
           onChange={onChange}
+          loading={loadingTable}
           />
           {/* <BookForm 
             isModalOpen={isModalOpen}

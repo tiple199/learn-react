@@ -6,10 +6,21 @@ const BookFormUncontroll = (props) => {
     const [form] = Form.useForm();
     const [selectedFile, setSelectedFile] = useState(null);
     const [preview,setPreview] = useState(null);
+    const [loadingCreate,setLoadingCreate] = useState(false);
     
 
     const {isModalOpen, setIsModalOpen, loadBook} = props;
+
+    const delay = (miliSecound) =>{
+    return new Promise((resolve,reject) => {
+      setTimeout(() => {
+        resolve()
+      },miliSecound)
+    });
+  }
+
     const handleSubmitBtn = async (values) => {
+        setLoadingCreate(true);
         const { mainText, author, price, quantity, category} = values;
         if(!preview){
             notification.error({
@@ -48,6 +59,8 @@ const BookFormUncontroll = (props) => {
             return;
             }
         }
+        await delay(1000);
+        setLoadingCreate(false);
         
     }
 
@@ -85,6 +98,9 @@ const BookFormUncontroll = (props) => {
         open={isModalOpen}
         onOk={()=>{form.submit()}}
         onCancel={resetAndCloseModal}
+        okButtonProps={{
+          loading:loadingCreate
+        }}
         okText={"Create"}
       >
        <Form
